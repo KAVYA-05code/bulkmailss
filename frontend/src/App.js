@@ -5,7 +5,7 @@ function App() {
 
   const [msg, setmsg] = useState("")
   const[status,setstatus]=useState(false)
-  const[emailList,setemailList]=useState([])
+  const[emailList,setemailList]=useState("")
 
   function handlemsg(evt) {
     setmsg(evt.target.value)
