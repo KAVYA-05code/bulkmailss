@@ -1,1 +1,3 @@
-# bulkmail-res
+#bulkmail
+
+to send mails

@@ -5,7 +5,7 @@ function App() {
 
   const [msg, setmsg] = useState("")
   const[status,setstatus]=useState(false)
-  const[emailList,setemailList]=useState("")
+  const[emailList,setemailList]=useState([])
 
   function handlemsg(evt) {
     setmsg(evt.target.value)
@@ -13,7 +13,7 @@ function App() {
 
   function send() {
     setstatus(true)
-    axios.post("http://localhost:3001/sendemail", { msg:msg ,emailList:emailList})
+    axios.post("https://bulkmailssbck.onrender.com/sendemail", { msg:msg ,emailList:emailList})
       .then(function(data){
         if(data.data===true){
           alert("Email Sent Successfully")
