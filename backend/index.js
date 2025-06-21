@@ -59,9 +59,8 @@ app.post("/sendemail", function (req, res) {
 
 });
 
+require("dotenv").config(); 
 
-app.listen(3001, function () {
+app.listen(5000, function () {
     console.log("Server Started.....")
 })
-
-

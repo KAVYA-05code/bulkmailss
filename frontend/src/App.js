@@ -13,7 +13,7 @@ function App() {
 
   function send() {
     setstatus(true)
-    axios.post("https://bulkmailssbck.onrender.com/sendemail", { msg:msg ,emailList:emailList})
+    axios.post("http://localhost:5000/sendemail", { msg:msg ,emailList:emailList})
       .then(function(data){
         if(data.data===true){
           alert("Email Sent Successfully")
