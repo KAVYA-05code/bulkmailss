@@ -4,8 +4,8 @@ import *  as XLSX from 'xlsx'
 function App() {
 
   const [msg, setmsg] = useState("")
-  const[status,setstatus]=useState(false)
-  const[emailList,setemailList]=useState("")
+  const [status, setstatus] = useState(false)
+  const [emailList, setemailList] = useState("")
 
   function handlemsg(evt) {
     setmsg(evt.target.value)
@@ -13,40 +13,41 @@ function App() {
 
   function send() {
     setstatus(true)
-    axios.post("http://localhost:5000/sendemail", { msg:msg ,emailList:emailList})
-      .then(function(data){
-        if(data.data===true){
+    axios.post(`${process.env.REACT_APP_API_URL}/sendemail`, { msg, emailList })
+
+      .then(function (data) {
+        if (data.data === true) {
           alert("Email Sent Successfully")
           setstatus(false)
         }
-        else{
+        else {
           alert("Failed")
         }
       })
 
   }
- function handlefile(event){
-   const file=event.target.files[0]
+  function handlefile(event) {
+    const file = event.target.files[0]
     console.log(file)
-    const reader=new FileReader()
+    const reader = new FileReader()
 
-    reader.onload=function(event){
-        const data=event.target.result
-        const workbook=XLSX.read(data,{type:"binary"})
-       const sheetName=workbook.SheetNames[0]
-       const worksheet=workbook.Sheets[sheetName]
-       console.log(worksheet)
-       const emailList= XLSX.utils.sheet_to_json(worksheet,{header:'A'})
-       const totalemail=emailList.map(function(item){
+    reader.onload = function (event) {
+      const data = event.target.result
+      const workbook = XLSX.read(data, { type: "binary" })
+      const sheetName = workbook.SheetNames[0]
+      const worksheet = workbook.Sheets[sheetName]
+      console.log(worksheet)
+      const emailList = XLSX.utils.sheet_to_json(worksheet, { header: 'A' })
+      const totalemail = emailList.map(function (item) {
         return item.A
-       })
-       console.log(totalemail)
-       setemailList(totalemail)
+      })
+      console.log(totalemail)
+      setemailList(totalemail)
     }
 
     reader.readAsBinaryString(file)
 
- }
+  }
 
   return (
     <div className="text-center">
@@ -64,10 +65,10 @@ function App() {
         <textarea onChange={handlemsg} value={msg} className="w-[80%] h-32 py-2 outline-none px-2 border norder-black rounded-md " placeholder="Enter the email text...."></textarea>
 
         <div>
-          <input  type="file" onChange={handlefile} className="border-4 border-dashed py-4 px-4 mt-5 mb-5 "></input>
+          <input type="file" onChange={handlefile} className="border-4 border-dashed py-4 px-4 mt-5 mb-5 "></input>
           <p>Total Emails in the file:{emailList.length}</p>
         </div>
-        <button onClick={send} className="bg-blue-950 px-2 py-2 mt-3 text-white font-medium rounded-md w-fit">{status?"Sending...":"Send"}</button>
+        <button onClick={send} className="bg-blue-950 px-2 py-2 mt-3 text-white font-medium rounded-md w-fit">{status ? "Sending..." : "Send"}</button>
       </div>
       <div className="bg-blue-300 text-white text-cente p-8">
 
