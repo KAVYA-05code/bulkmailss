@@ -7,11 +7,11 @@ const mongoose = require("mongoose");
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://kavya:123%23@cluster0.j3pom0w.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(function () {
+mongoose.connect("mongodb+srv://kavya:123@cluster0.j3pom0w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(function () {
     console.log("Connected to DB")
 }).catch(function () { console.log("Failed to connect") })
 
-const cryt = mongoose.model("cryt", {}, "bulkmail")
+const cryt = mongoose.model("cryts", {}, "bulkmail")
 //
 app.post("/sendemail", function (req, res) {
     var msg = req.body.msg;

@@ -5,28 +5,12 @@ function App() {
 
   const [msg, setmsg] = useState("")
   const [status, setstatus] = useState(false)
-  const [emailList, setemailList] = useState("")
+  const [emailList, setemailList] = useState([])
 
   function handlemsg(evt) {
     setmsg(evt.target.value)
   }
-
-  function send() {
-    setstatus(true)
-    axios.post(`${process.env.REACT_APP_API_URL}/sendemail`, { msg, emailList })
-
-      .then(function (data) {
-        if (data.data === true) {
-          alert("Email Sent Successfully")
-          setstatus(false)
-        }
-        else {
-          alert("Failed")
-        }
-      })
-
-  }
-  function handlefile(event) {
+ function handlefile(event) {
     const file = event.target.files[0]
     console.log(file)
     const reader = new FileReader()
@@ -48,6 +32,27 @@ function App() {
     reader.readAsBinaryString(file)
 
   }
+  function send() {
+    setstatus(true)
+    axios.post(`${process.env.REACT_APP_API_URL}/sendemail`, { msg, emailList })
+
+      .then(function (data) {
+        if (data.data === true) {
+          alert("Email Sent Successfully")
+          setstatus(false)
+        }
+        else {
+          alert("Failed")
+        }
+      })
+      .catch(function(err) {
+    console.error("Error sending request:", err);
+    alert("Error while sending email");
+    setstatus(false);
+  });
+
+  }
+ 
 
   return (
     <div className="text-center">
